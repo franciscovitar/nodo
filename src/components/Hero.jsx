@@ -3,6 +3,7 @@
 import styles from "./Hero.module.scss";
 import Button from "./ui/Button";
 import { siteData, socialProof } from "../lib/data";
+import { safeWindow } from "../lib/browser";
 
 export default function Hero() {
   const message = encodeURIComponent(
@@ -12,11 +13,7 @@ export default function Hero() {
 
   const scrollToPlanes = (e) => {
     e.preventDefault();
-    const el = document.querySelector("#planes");
-    if (!el) return;
-
-    const offsetTop = el.offsetTop - 80;
-    window.scrollTo({ top: offsetTop, behavior: "smooth" });
+    safeWindow.scrollToElement("#planes");
   };
 
   // soporta:

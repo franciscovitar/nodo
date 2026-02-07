@@ -1,22 +1,36 @@
 // useReveal.js - Hook para animaciones de reveal on scroll
 
 import { useEffect, useRef, useState } from "react";
+import {
+  isBrowser,
+  safeWindow,
+  useIntersectionObserverSupport,
+} from "./browser";
 
 export const useReveal = (threshold = 0.1, rootMargin = "0px") => {
   const ref = useRef(null);
   const [isRevealed, setIsRevealed] = useState(false);
+  const hasIntersectionObserver = useIntersectionObserverSupport();
 
   useEffect(() => {
+    // Solo ejecutar en el cliente
+    if (!isBrowser()) return;
+
     const element = ref.current;
     if (!element) return;
 
     // Verificar si el usuario prefiere movimiento reducido
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = safeWindow.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     if (prefersReducedMotion) {
+      setIsRevealed(true);
+      return;
+    }
+
+    // Verificar si IntersectionObserver está disponible
+    if (!hasIntersectionObserver) {
       setIsRevealed(true);
       return;
     }
@@ -36,7 +50,7 @@ export const useReveal = (threshold = 0.1, rootMargin = "0px") => {
     return () => {
       observer.unobserve(element);
     };
-  }, [threshold, rootMargin, isRevealed]);
+  }, [threshold, rootMargin, isRevealed, hasIntersectionObserver]);
 
   return [ref, isRevealed];
 };
@@ -45,17 +59,26 @@ export const useReveal = (threshold = 0.1, rootMargin = "0px") => {
 export const useRevealStagger = (delay = 100) => {
   const ref = useRef(null);
   const [isRevealed, setIsRevealed] = useState(false);
+  const hasIntersectionObserver = useIntersectionObserverSupport();
 
   useEffect(() => {
+    // Solo ejecutar en el cliente
+    if (!isBrowser()) return;
+
     const element = ref.current;
     if (!element) return;
 
-    const prefersReducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = safeWindow.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
 
     if (prefersReducedMotion) {
+      setIsRevealed(true);
+      return;
+    }
+
+    // Verificar si IntersectionObserver está disponible
+    if (!hasIntersectionObserver) {
       setIsRevealed(true);
       return;
     }
@@ -79,7 +102,7 @@ export const useRevealStagger = (delay = 100) => {
     return () => {
       observer.unobserve(element);
     };
-  }, [delay, isRevealed]);
+  }, [delay, isRevealed, hasIntersectionObserver]);
 
   return [ref, isRevealed];
 };

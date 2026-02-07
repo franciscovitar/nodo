@@ -1,4 +1,7 @@
 // page.jsx - Página principal
+"use client";
+
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Steps from "../components/Steps";
@@ -11,7 +14,20 @@ import Resources from "../components/Resources";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
+// Forzar renderizado dinámico
+export const dynamic = "force-dynamic";
+
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null; // o un loading spinner
+  }
+
   return (
     <>
       <Header />

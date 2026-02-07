@@ -4,32 +4,33 @@ import { useState, useEffect } from "react";
 import styles from "./Header.module.scss";
 import Button from "./ui/Button";
 import { navigation, siteData } from "../lib/data";
+import { safeWindow } from "../lib/browser";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(safeWindow.getScrollY() > 20);
+    return safeWindow.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
   }, []);
 
   // Lock scroll + ESC close
   useEffect(() => {
     if (!isMobileMenuOpen) return;
 
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const prevOverflow = safeWindow.setBodyOverflow("hidden");
 
     const onKeyDown = (e) => {
       if (e.key === "Escape") setIsMobileMenuOpen(false);
     };
-    window.addEventListener("keydown", onKeyDown);
+    const removeKeyListener = safeWindow.addEventListener("keydown", onKeyDown);
 
     return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener("keydown", onKeyDown);
+      safeWindow.restoreBodyOverflow(prevOverflow);
+      removeKeyListener();
     };
   }, [isMobileMenuOpen]);
 
@@ -38,11 +39,7 @@ export default function Header() {
 
   const handleNavClick = (e, href) => {
     e.preventDefault();
-    const element = document.querySelector(href);
-    if (element) {
-      const offsetTop = element.offsetTop - 80;
-      window.scrollTo({ top: offsetTop, behavior: "smooth" });
-    }
+    safeWindow.scrollToElement(href);
     closeMobileMenu();
   };
 

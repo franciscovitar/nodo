@@ -3,20 +3,18 @@
 import styles from "./Footer.module.scss";
 import Button from "./ui/Button";
 import { siteData, navigation } from "../lib/data";
+import { safeWindow } from "../lib/browser";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  // Usar año estático para evitar problemas de hidratación
+  const currentYear = 2026;
 
   const whatsappLink = `https://wa.me/${siteData.company.phone}?text=${encodeURIComponent(
     "Hola, me interesa contactar con NODO para conocer más sobre sus servicios",
   )}`;
 
   const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      const offsetTop = element.offsetTop - 80;
-      window.scrollTo({ top: offsetTop, behavior: "smooth" });
-    }
+    safeWindow.scrollToElement(href);
   };
 
   return (
