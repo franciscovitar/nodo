@@ -1,0 +1,207 @@
+/* Testimonials.module.scss - Premium violeta */
+
+.testimonials {
+    --p: var(--primary, var(--accent, #6d5efc));
+    padding: var(--space-20) 0;
+    background:
+        radial-gradient(900px circle at 20% 0%, rgba(109, 94, 252, 0.10) 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg2));
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+
+    @media (min-width: 768px) {
+        padding: 0 var(--space-6);
+    }
+
+    @media (min-width: 1024px) {
+        padding: 0 var(--space-8);
+    }
+}
+
+.testimonialsGrid {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.testimonialCard {
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 22px;
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 55px rgba(15, 23, 42, 0.10);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 26px 80px rgba(15, 23, 42, 0.14);
+        border-color: rgba(109, 94, 252, 0.20);
+    }
+}
+
+.quoteIcon {
+    color: rgba(109, 94, 252, 0.9);
+    font-size: 2rem;
+    line-height: 1;
+    opacity: 0.9;
+}
+
+.testimonialContent {
+    color: rgba(11, 11, 12, 0.80);
+    font-style: italic;
+    line-height: 1.65;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.testimonialFooter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.testimonialAvatar {
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 999px;
+
+    background: linear-gradient(135deg, rgba(109, 94, 252, 1) 0%, rgba(138, 125, 248, 1) 100%);
+    display: grid;
+    place-items: center;
+    color: #fff;
+    font-weight: 950;
+    font-size: 1rem;
+    flex-shrink: 0;
+
+    box-shadow: 0 16px 35px rgba(109, 94, 252, 0.22);
+}
+
+.testimonialInfo {
+    flex: 1;
+}
+
+.testimonialName {
+    font-weight: 900;
+    color: rgba(11, 11, 12, 0.90);
+    margin-bottom: 0.15rem;
+    font-size: 0.95rem;
+}
+
+.testimonialCompany {
+    font-size: 0.9rem;
+    color: rgba(109, 94, 252, 1);
+    font-weight: 850;
+    margin-bottom: 0.25rem;
+}
+
+.testimonialMeta {
+    font-size: 0.82rem;
+    color: rgba(17, 24, 39, 0.58);
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+    margin-bottom: 0.7rem;
+}
+
+.dot {
+    opacity: 0.7;
+}
+
+.testimonialRating {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.star {
+    width: 1rem;
+    height: 1rem;
+    fill: none;
+}
+
+.starOn path {
+    fill: rgba(109, 94, 252, 1);
+}
+
+.starOff path {
+    fill: rgba(229, 231, 235, 1);
+}
+
+/* CTA */
+.cta {
+    text-align: center;
+    margin-top: var(--space-16);
+    padding: var(--space-8);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 22px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 55px rgba(15, 23, 42, 0.10);
+}
+
+.ctaTitle {
+    font-size: 1.75rem;
+    font-weight: 950;
+    color: rgba(11, 11, 12, 0.92);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+
+    @media (min-width: 768px) {
+        font-size: 2rem;
+    }
+}
+
+.ctaDescription {
+    color: rgba(17, 24, 39, 0.62);
+    font-size: 1.05rem;
+    margin-bottom: 1.6rem;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Animaciones */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: all 0.6s ease;
+
+    &.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.staggerItem {
+    transition-delay: calc(var(--stagger-delay, 0) * 140ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        transition: none;
+        transform: none;
+        opacity: 1;
+    }
+
+    .testimonialCard,
+    .testimonialCard:hover {
+        transform: none;
+    }
+}

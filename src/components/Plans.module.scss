@@ -1,0 +1,325 @@
+/* Plans.module.scss - Premium violeta (FIX badge "Más Popular") */
+
+.plans {
+    --p: var(--primary, var(--accent, #6d5efc));
+    padding: var(--space-20) 0;
+    background:
+        radial-gradient(900px circle at 20% 0%, rgba(109, 94, 252, 0.10) 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg2), var(--bg2));
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+
+    @media (min-width: 768px) {
+        padding: 0 var(--space-6);
+    }
+
+    @media (min-width: 1024px) {
+        padding: 0 var(--space-8);
+    }
+}
+
+.plansGrid {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-12);
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-6);
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-8);
+    }
+}
+
+.planCard {
+    position: relative;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 22px;
+    padding: 2rem;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+    &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 24px 70px rgba(15, 23, 42, 0.12);
+        border-color: rgba(109, 94, 252, 0.20);
+    }
+
+    /* halo behind (never above text) */
+    &::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        background: radial-gradient(500px circle at 20% 10%,
+                rgba(109, 94, 252, 0.10),
+                transparent 55%);
+        opacity: 0;
+        transition: opacity 0.25s ease;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    &:hover::before {
+        opacity: 1;
+    }
+
+    /* ensure real content always above overlays */
+    >* {
+        position: relative;
+        z-index: 1;
+    }
+}
+
+/* ✅ FIX: reserve space for the badge so it doesn't overlap the title */
+.highlighted {
+    padding-top: 4rem;
+    /* adds room for the badge inside the card */
+
+    border-color: rgba(109, 94, 252, 0.28);
+    box-shadow:
+        0 26px 80px rgba(109, 94, 252, 0.16),
+        0 0 0 1px rgba(109, 94, 252, 0.18);
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg,
+                rgba(109, 94, 252, 0.14) 0%,
+                rgba(138, 125, 248, 0.08) 40%,
+                transparent 70%);
+        pointer-events: none;
+        z-index: 0;
+        /* behind content */
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow:
+            0 34px 90px rgba(109, 94, 252, 0.20),
+            0 0 0 1px rgba(109, 94, 252, 0.22);
+    }
+}
+
+.popularBadge {
+    position: absolute;
+    top: 14px;
+    left: 30%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    // margin: auto;
+    gap: 0.5rem;
+
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+
+    background: linear-gradient(135deg, var(--p) 0%, rgba(138, 125, 248, 1) 100%);
+    color: #fff;
+
+    font-size: 0.82rem;
+    font-weight: 750;
+
+    box-shadow: 0 14px 30px rgba(109, 94, 252, 0.22);
+    z-index: 2;
+    /* always above */
+    isolation: isolate;
+}
+
+.badgeIcon {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    line-height: 1;
+}
+
+.planHeader {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.planName {
+    font-size: 1.55rem;
+    font-weight: 850;
+    color: rgba(11, 11, 12, 0.90);
+    margin-bottom: 0.4rem;
+}
+
+.planSubtitle {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--p);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.9rem;
+}
+
+.planDescription {
+    color: rgba(17, 24, 39, 0.64);
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+}
+
+.planPricing {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.planPrice {
+    font-size: 2.35rem;
+    font-weight: 900;
+    color: rgba(11, 11, 12, 0.92);
+    letter-spacing: -0.02em;
+
+    @media (min-width: 768px) {
+        font-size: 2.55rem;
+    }
+}
+
+.planPriceNote {
+    font-size: 0.9rem;
+    color: rgba(17, 24, 39, 0.55);
+}
+
+.planFeatures {
+    list-style: none;
+    padding: 0;
+    margin: 1.6rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    flex: 1;
+}
+
+.planFeature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: rgba(11, 11, 12, 0.82);
+
+    span:last-child {
+        line-height: 1.55;
+    }
+}
+
+.checkIcon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    border-radius: 999px;
+    display: inline-grid;
+    place-items: center;
+    background: rgba(109, 94, 252, 0.10);
+    color: var(--p);
+    font-weight: 900;
+    margin-top: 0.05rem;
+}
+
+.planAction {
+    margin-top: auto;
+    padding-top: 1.25rem;
+}
+
+.planButton {
+    width: 100%;
+}
+
+.planNote {
+    margin-top: 0.7rem;
+    text-align: center;
+    font-size: 0.85rem;
+    color: rgba(17, 24, 39, 0.55);
+}
+
+/* Additional Info (si lo volvés a activar) */
+.additionalInfo {
+    margin-top: var(--space-16);
+    text-align: center;
+}
+
+.customPlan {
+    max-width: 680px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 22px;
+    padding: 2.4rem 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+}
+
+.customPlanTitle {
+    font-size: 1.35rem;
+    font-weight: 850;
+    color: rgba(11, 11, 12, 0.90);
+    margin-bottom: 0.9rem;
+}
+
+.customPlanText {
+    color: rgba(17, 24, 39, 0.62);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.customPlanButton {
+    margin: 0 auto;
+}
+
+/* Animaciones */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: all 0.6s ease;
+
+    &.revealed {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.staggerItem {
+    transition-delay: calc(var(--stagger-delay, 0) * 140ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        transition: none;
+        transform: none;
+        opacity: 1;
+    }
+
+    .planCard,
+    .planCard:hover {
+        transform: none;
+    }
+}
+
+/* Mobile fine-tuning */
+@media (max-width: 767px) {
+    .planCard {
+        padding: 1.6rem;
+    }
+
+    .highlighted {
+        padding-top: 2.6rem;
+        /* mantiene espacio para el badge en mobile */
+    }
+}
