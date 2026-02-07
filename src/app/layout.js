@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
       <body>
         {/* <a href="#hero" className="skip-link">
           Saltar al contenido principal
-        </a>   */}
+        </a>     */}
         {children}
       </body>
     </html>
