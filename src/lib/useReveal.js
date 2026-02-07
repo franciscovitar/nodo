@@ -11,9 +11,11 @@ export const useReveal = (threshold = 0.1, rootMargin = "0px") => {
     if (!element) return;
 
     // Verificar si el usuario prefiere movimiento reducido
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     if (prefersReducedMotion) {
       setIsRevealed(true);
       return;
@@ -48,9 +50,11 @@ export const useRevealStagger = (delay = 100) => {
     const element = ref.current;
     if (!element) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const prefersReducedMotion =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     if (prefersReducedMotion) {
       setIsRevealed(true);
       return;
